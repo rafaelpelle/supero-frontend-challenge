@@ -4,7 +4,7 @@ export const pageHeaderHeight = '75px'
 export const isMobile = window.innerWidth < 800
 export const toastTimeout = 3000
 export const moneyGreen = '#4caf50'
-export const primaryColor = '#7159C1'
+export const primaryColor = '#F16550'
 export const secondaryColor = '#FFFFFF'
 
 export const appTheme = createMuiTheme({
@@ -18,7 +18,7 @@ export const appTheme = createMuiTheme({
 	},
 	typography: {
 		fontFamily: [
-			'Roboto',
+			'Montserrat',
 			'"Helvetica Neue"',
 			'sans-serif',
 			'"Apple Color Emoji"',
