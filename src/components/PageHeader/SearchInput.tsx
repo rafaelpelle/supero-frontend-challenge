@@ -42,7 +42,7 @@ const SearchInput: React.FC<Props> = (props) => {
 				onChange={ handleChange }
 				onKeyPress={ handleKeyPress }
 				style={ isOpen ? visibleInputStyle : hiddenInputStyle }
-				ref={ inputRef }
+				inputProps={ { ref: inputRef } }
 			/>
 			<IconButton color='secondary' onClick={ handleSearch }>
 				<SearchIcon style={ iconStyle } />

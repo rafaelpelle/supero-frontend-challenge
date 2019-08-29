@@ -38,7 +38,7 @@ const hiddenStyle = {
 	maxWidth: 0,
 }
 const imageStyle = {
-	height: `calc(${pageHeaderHeight} - 20px)`,
+	height: `calc(${pageHeaderHeight} - 30px)`,
 	width: 'auto',
 	marginRight: '30px',
 	filter: 'brightness(500%) grayscale(10%)',

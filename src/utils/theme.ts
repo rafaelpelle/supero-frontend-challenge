@@ -1,6 +1,6 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
 
-export const pageHeaderHeight = '80px'
+export const pageHeaderHeight = '100px'
 export const isMobile = window.innerWidth < 800
 export const toastTimeout = 3000
 export const moneyGreen = '#4caf50'
