@@ -35,10 +35,12 @@ const hiddenStyle = {
 	transition: 'all .1s ease-in-out 0s',
 	transitionDelay: '0s',
 	opacity: 0,
+	maxWidth: 0,
 }
 const imageStyle = {
 	height: `calc(${pageHeaderHeight} - 20px)`,
 	width: 'auto',
+	marginRight: '30px',
 	filter: 'brightness(500%) grayscale(10%)',
 }
 

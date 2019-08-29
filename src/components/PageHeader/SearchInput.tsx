@@ -26,7 +26,7 @@ const SearchInput: React.FC<Props> = (props) => {
 			}
 		} else {
 			if (searchTerm) {
-				// Search something
+				// TODO Search something
 			}
 			setIsOpen(false)
 			setSearchTerm('')
@@ -60,14 +60,12 @@ const iconStyle = {
 }
 const visibleInputStyle = {
 	backgroundColor: 'white',
-	maxWidth: '300px',
-	marginLeft: 'auto',
-	borderRadius: '100px',
+	maxWidth: '100%',
 	width: '100%',
+	marginLeft: 'auto',
 	transition: 'all .3s ease-in-out 0s, background-color .2s linear .1s',
 	overflow: 'hidden',
-	padding: '3px 10px',
-	fontSize: '0.85em',
+	padding: '7px 10px',
 }
 const hiddenInputStyle = {
 	...visibleInputStyle,
