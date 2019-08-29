@@ -1,11 +1,10 @@
 import * as React from 'react'
 import Typography from '@material-ui/core/Typography'
+import BookTable from '../../components/BookTable'
 
 const HomePage: React.FC<Props> = (props) => (
 	<div style={ containerStyle }>
-		<Typography variant='h4' color='primary' align='center' style={ headerStyle }>
-			HomePage
-		</Typography>
+		<BookTable />
 	</div>
 )
 
