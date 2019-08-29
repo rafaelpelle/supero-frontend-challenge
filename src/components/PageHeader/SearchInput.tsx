@@ -56,7 +56,7 @@ export default SearchInput
 ///////////////////////////// STYLES ////////////////////////////
 /////////////////////////////////////////////////////////////////
 const iconStyle = {
-	fontSize: '1.25em',
+	fontSize: '1.75em',
 }
 const visibleInputStyle = {
 	backgroundColor: 'white',
