@@ -5,6 +5,7 @@ import { Router, Switch } from 'react-router-dom'
 import { RootReducerInterface } from '../utils/interfaces'
 import { history } from '../router/history'
 import MyRoutes from '../router/myRoutes'
+import PageHeader from '../components/PageHeader'
 
 require('./app.css')
 
@@ -24,8 +25,9 @@ const App: React.FC<Props> = (props) => {
 	}
 
 	return (
-		<Router history={history}>
+		<Router history={ history }>
 			<div>
+				<PageHeader />
 				<Switch>
 					<MyRoutes />
 				</Switch>
