@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import Skeleton from 'react-loading-skeleton'
 import { bookPage1 } from '../../utils/fakeData'
 
 const BookTable: React.FC<Props> = (props) => {
@@ -25,6 +26,38 @@ const BookTable: React.FC<Props> = (props) => {
 		} catch (e) {
 			console.error(e)
 		}
+		setLoading(false)
+	}
+
+	const renderBooks = () =>
+		bookPage.map((book: Book) => (
+			<TableRow key={ book.ISBN }>
+				<TableCell component='th' scope='row'>
+					{ book.title }
+				</TableCell>
+				<TableCell align='right'>{ book.author }</TableCell>
+				<TableCell align='right'>{ book.publisher }</TableCell>
+				<TableCell align='right'>{ book.year }</TableCell>
+				<TableCell align='right'>Detalhes</TableCell>
+			</TableRow>
+		))
+
+	const renderPlaceholders = () => {
+		const placeholders = []
+		for (let i = 0; i < 10; i++) {
+			placeholders.push(
+				<TableRow key={ i }>
+					<TableCell component='th' scope='row'>
+						<Skeleton />
+					</TableCell>
+					<TableCell align='right'>{ <Skeleton /> }</TableCell>
+					<TableCell align='right'>{ <Skeleton /> }</TableCell>
+					<TableCell align='right'>{ <Skeleton /> }</TableCell>
+					<TableCell align='right'>{ <Skeleton /> }</TableCell>
+				</TableRow>
+			)
+		}
+		return placeholders
 	}
 
 	return (
@@ -39,19 +72,7 @@ const BookTable: React.FC<Props> = (props) => {
 						<TableCell align='right'>Ações</TableCell>
 					</TableRow>
 				</TableHead>
-				<TableBody>
-					{ bookPage.map((book: Book) => (
-						<TableRow key={ book.ISBN }>
-							<TableCell component='th' scope='row'>
-								{ book.title }
-							</TableCell>
-							<TableCell align='right'>{ book.author }</TableCell>
-							<TableCell align='right'>{ book.publisher }</TableCell>
-							<TableCell align='right'>{ book.year }</TableCell>
-							<TableCell align='right'>Detalhes</TableCell>
-						</TableRow>
-					)) }
-				</TableBody>
+				<TableBody>{ loading ? renderPlaceholders() : renderBooks() }</TableBody>
 			</Table>
 		</Paper>
 	)
