@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 import { RootReducerInterface } from '../../utils/interfaces'
-import ControllerReducer from './controllerReducer'
+import bookReducer from './bookReducer'
 
 const rootReducer = combineReducers<RootReducerInterface>({
-	ControllerReducer,
+	bookReducer,
 })
 
 export default rootReducer

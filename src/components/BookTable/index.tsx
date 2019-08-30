@@ -1,5 +1,8 @@
 import * as React from 'react'
-import { Book } from '../../utils/interfaces'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { Book, RootReducerInterface, OpenBookDialogAction } from '../../utils/interfaces'
+import { openBookDialog } from '../../redux/ActionCreators/bookActions'
 import { sleep } from '../../utils/time'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -39,14 +42,16 @@ const BookTable: React.FC<Props> = (props) => {
 
 	const renderBooks = () =>
 		bookPage.map((book: Book, index: number) => (
-			<TableRow key={ index }>
-				<TableCell component='th' scope='row'>
-					{ book.title }
-				</TableCell>
+			<TableRow
+				onClick={ () => props.openBookDialog(book) }
+				style={ { cursor: 'pointer' } }
+				key={ index + book.title }
+				hover={ true }
+			>
+				<TableCell>{ book.title }</TableCell>
 				<TableCell align='right'>{ book.author }</TableCell>
 				<TableCell align='right'>{ book.publisher }</TableCell>
 				<TableCell align='right'>{ book.year }</TableCell>
-				<TableCell align='right'>Detalhes</TableCell>
 			</TableRow>
 		))
 
@@ -55,7 +60,6 @@ const BookTable: React.FC<Props> = (props) => {
 		for (let i = 0; i < 10; i++) {
 			placeholders.push(
 				<TableRow key={ i }>
-					<TableCell>{ <Skeleton /> }</TableCell>
 					<TableCell>{ <Skeleton /> }</TableCell>
 					<TableCell>{ <Skeleton /> }</TableCell>
 					<TableCell>{ <Skeleton /> }</TableCell>
@@ -77,7 +81,6 @@ const BookTable: React.FC<Props> = (props) => {
 						<TableCell align='right'>Autor</TableCell>
 						<TableCell align='right'>Editora</TableCell>
 						<TableCell align='right'>Ano</TableCell>
-						<TableCell align='right'>Ações</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>{ loading ? renderPlaceholders() : renderBooks() }</TableBody>
@@ -97,7 +100,12 @@ const BookTable: React.FC<Props> = (props) => {
 	)
 }
 
-export default BookTable
+const mapStateToProps = (state: RootReducerInterface) => ({})
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openBookDialog }, dispatch)
+export default connect<StateProps, DispatchProps, OwnProps>(
+	mapStateToProps,
+	mapDispatchToProps
+)(BookTable)
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// STYLES ///////////////////////////////////
@@ -117,7 +125,9 @@ interface OwnProps {}
 
 interface StateProps {}
 
-interface DispatchProps {}
+interface DispatchProps {
+	openBookDialog: OpenBookDialogAction
+}
 
 type Props = StateProps & DispatchProps & OwnProps
 type State = OwnState
