@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Typography from '@material-ui/core/Typography'
 import BookTable from '../../components/BookTable'
 
 const HomePage: React.FC<Props> = (props) => (
@@ -17,10 +16,6 @@ const containerStyle = {
 	maxWidth: '1000px',
 	margin: '0 auto',
 	padding: '2em 15px',
-}
-const headerStyle = {
-	letterSpaceing: '5px',
-	marginBottom: '2em',
 }
 /////////////////////////////////////////////////////////////////
 /////////////////////////// INTERFACES //////////////////////////
