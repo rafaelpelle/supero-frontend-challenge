@@ -30,4 +30,5 @@ export interface Book {
 		width: number
 		length: number
 	}
+	[key: string]: any
 }

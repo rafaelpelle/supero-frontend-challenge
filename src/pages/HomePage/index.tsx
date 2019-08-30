@@ -1,9 +1,11 @@
 import * as React from 'react'
 import BookTable from '../../components/BookTable'
+import BookDialog from '../../components/BookDialog'
 
 const HomePage: React.FC<Props> = (props) => (
 	<div style={ containerStyle }>
 		<BookTable />
+		<BookDialog />
 	</div>
 )
 
