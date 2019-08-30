@@ -8,30 +8,38 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import Skeleton from 'react-loading-skeleton'
-import { bookPage1 } from '../../utils/fakeData'
+import { bookPages } from '../../utils/fakeData'
+import TablePagination from '@material-ui/core/TablePagination'
 
 const BookTable: React.FC<Props> = (props) => {
 	const [loading, setLoading] = React.useState(true)
 	const [page, setPage] = React.useState(0)
+	const [totalBooks, setTotalBooks] = React.useState(20)
 	const [bookPage, setBookPage] = React.useState<Book[]>([])
 
 	React.useEffect(() => {
-		getBookPage()
+		getBookPage(page)
 	}, [])
 
-	const getBookPage = async () => {
+	const getBookPage = async (newPage: number) => {
+		setLoading(true)
 		try {
 			await sleep(2000) // Simulating a API request
-			setBookPage(bookPage1)
+			setBookPage(bookPages[newPage])
 		} catch (e) {
 			console.error(e)
 		}
 		setLoading(false)
 	}
 
+	const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, newPage: number) => {
+		setPage(newPage)
+		getBookPage(newPage)
+	}
+
 	const renderBooks = () =>
-		bookPage.map((book: Book) => (
-			<TableRow key={ book.ISBN }>
+		bookPage.map((book: Book, index: number) => (
+			<TableRow key={ index }>
 				<TableCell component='th' scope='row'>
 					{ book.title }
 				</TableCell>
@@ -47,18 +55,18 @@ const BookTable: React.FC<Props> = (props) => {
 		for (let i = 0; i < 10; i++) {
 			placeholders.push(
 				<TableRow key={ i }>
-					<TableCell component='th' scope='row'>
-						<Skeleton />
-					</TableCell>
-					<TableCell align='right'>{ <Skeleton /> }</TableCell>
-					<TableCell align='right'>{ <Skeleton /> }</TableCell>
-					<TableCell align='right'>{ <Skeleton /> }</TableCell>
-					<TableCell align='right'>{ <Skeleton /> }</TableCell>
+					<TableCell>{ <Skeleton /> }</TableCell>
+					<TableCell>{ <Skeleton /> }</TableCell>
+					<TableCell>{ <Skeleton /> }</TableCell>
+					<TableCell>{ <Skeleton /> }</TableCell>
+					<TableCell>{ <Skeleton /> }</TableCell>
 				</TableRow>
 			)
 		}
 		return placeholders
 	}
+
+	const formatPagination = ({ from, to, count }: any) => `${from}-${to} de ${count}`
 
 	return (
 		<Paper elevation={ 2 } style={ containerStyle }>
@@ -74,6 +82,22 @@ const BookTable: React.FC<Props> = (props) => {
 				</TableHead>
 				<TableBody>{ loading ? renderPlaceholders() : renderBooks() }</TableBody>
 			</Table>
+			<TablePagination
+				rowsPerPageOptions={ [10] }
+				// onChangeRowsPerPage={ handleChangeRowsPerPage }
+				rowsPerPage={ 10 }
+				component='div'
+				count={ totalBooks }
+				page={ page }
+				onChangePage={ handleChangePage }
+				labelDisplayedRows={ formatPagination }
+				backIconButtonProps={ {
+					'aria-label': 'previous page',
+				} }
+				nextIconButtonProps={ {
+					'aria-label': 'next page',
+				} }
+			/>
 		</Paper>
 	)
 }

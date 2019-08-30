@@ -32,3 +32,4 @@ export const book2: Book = {
 
 export const bookPage1: Book[] = [book1, book1, book1, book1, book1, book2, book2, book2, book2, book2]
 export const bookPage2: Book[] = [book2, book2, book2, book2, book2, book1, book1, book1, book1, book1]
+export const bookPages = [bookPage1, bookPage2]
