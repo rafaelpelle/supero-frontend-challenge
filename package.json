@@ -1,8 +1,8 @@
 {
-	"name": "blueticket-challenge-front",
+	"name": "supero-frontend-challenge",
 	"version": "1.0.0",
 	"main": "index.js",
-	"repository": "https://github.com/rafaelpelle/blueticket-challenge-front.git",
+	"repository": "https://github.com/rafaelpelle/supero-frontend-challenge.git",
 	"author": "Rafael Pelle <rafapelle@gmail.com>",
 	"license": "MIT",
 	"scripts": {

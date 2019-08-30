@@ -84,11 +84,11 @@ module.exports = env = {
 		}),
 		new HtmlWebpackPlugin({
 			appMountId: 'root',
-			title: 'blueticket-challenge-front',
+			title: 'supero-frontend-challenge',
 			template: './public/index.html',
 		}),
 		new SWPrecacheWebpackPlugin({
-			cacheId: 'blueticket-challenge-front',
+			cacheId: 'supero-frontend-challenge',
 			dontCacheBustUrlsMatching: /\.\w{8}\./,
 			filename: 'service-worker.js',
 			minify: true,
@@ -114,11 +114,11 @@ module.exports = env = {
 			},
 		}),
 		new WebpackPwaManifest({
-			name: 'blueticket-challenge-front',
+			name: 'supero-frontend-challenge',
 			short_name: 'challenge',
-			description: 'blueticket-challenge-front',
-			background_color: '#7159c1',
-			theme_color: '#7159c1',
+			description: 'supero-frontend-challenge',
+			background_color: '#F16550',
+			theme_color: '#F16550',
 			start_url: '/',
 			icons: [
 				{

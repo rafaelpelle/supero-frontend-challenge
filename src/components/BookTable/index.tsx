@@ -16,8 +16,8 @@ import TablePagination from '@material-ui/core/TablePagination'
 
 const BookTable: React.FC<Props> = (props) => {
 	const [loading, setLoading] = React.useState(true)
-	const [page, setPage] = React.useState(0)
 	const [totalBooks, setTotalBooks] = React.useState(20)
+	const [page, setPage] = React.useState(0)
 	const [bookPage, setBookPage] = React.useState<Book[]>([])
 
 	React.useEffect(() => {
