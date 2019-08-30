@@ -61,7 +61,7 @@ const BookTable: React.FC<Props> = (props) => {
 	}
 
 	return (
-		<Paper style={ containerStyle }>
+		<Paper elevation={ 2 } style={ containerStyle }>
 			<Table style={ tableStyle }>
 				<TableHead>
 					<TableRow>
