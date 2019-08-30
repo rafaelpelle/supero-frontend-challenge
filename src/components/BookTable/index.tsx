@@ -84,19 +84,14 @@ const BookTable: React.FC<Props> = (props) => {
 			</Table>
 			<TablePagination
 				rowsPerPageOptions={ [10] }
-				// onChangeRowsPerPage={ handleChangeRowsPerPage }
 				rowsPerPage={ 10 }
-				component='div'
 				count={ totalBooks }
 				page={ page }
 				onChangePage={ handleChangePage }
 				labelDisplayedRows={ formatPagination }
-				backIconButtonProps={ {
-					'aria-label': 'previous page',
-				} }
-				nextIconButtonProps={ {
-					'aria-label': 'next page',
-				} }
+				component='div'
+				backIconButtonProps={ { 'aria-label': 'previous page' } }
+				nextIconButtonProps={ { 'aria-label': 'next page' } }
 			/>
 		</Paper>
 	)
