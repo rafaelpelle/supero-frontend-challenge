@@ -8,3 +8,8 @@ export const openBookDialog = (book: Book) => ({
 export const closeBookDialog = () => ({
 	type: 'BOOK_DIALOG_CLOSED',
 })
+
+export const searchByTerm = (searchTerm: string) => ({
+	type: 'SEARCH_TERM_CHANGED',
+	payload: searchTerm,
+})

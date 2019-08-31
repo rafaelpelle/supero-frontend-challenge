@@ -6,6 +6,7 @@ export interface RootReducerInterface {
 }
 
 export interface BookReducerInterface {
+	searchTerm: string
 	selectedBook: Book
 }
 

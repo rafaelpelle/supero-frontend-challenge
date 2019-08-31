@@ -1,11 +1,6 @@
 import * as React from 'react'
 import { validCPF, validEmail, validPassword } from '../../utils/validators'
-import {
-	handleCPF,
-	handleCellphone,
-	removeWhiteSpaces,
-	removeNonNumericCharacters,
-} from '../../utils/stringParser'
+import { handleCPF, handleCellphone, removeWhiteSpaces, removeNonNumericCharacters } from '../../utils/stringParser'
 
 const useState = React.useState
 
@@ -17,6 +12,20 @@ export function useInput(initialValue: string) {
 	return {
 		onChange: handleChange,
 		value,
+		error: '',
+		empty: value.length < 1,
+	}
+}
+
+export function useYearInput(initialValue: string) {
+	const [value, setValue] = useState(initialValue)
+	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+		setValue(removeNonNumericCharacters(e.target.value))
+	}
+	return {
+		onChange: handleChange,
+		value,
+		maxLength: 4,
 		error: '',
 		empty: value.length < 1,
 	}

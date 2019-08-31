@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { axiosInstance } from '../../utils/httpClient'
 import { Book, RootReducerInterface, OpenBookDialogAction } from '../../utils/interfaces'
 import { openBookDialog } from '../../redux/ActionCreators/bookActions'
-import { sleep } from '../../utils/time'
+import { useYearInput } from '../../hooks/UseInput'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -11,24 +12,28 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import Skeleton from 'react-loading-skeleton'
-import { bookPages } from '../../utils/fakeData'
 import TablePagination from '@material-ui/core/TablePagination'
 
 const BookTable: React.FC<Props> = (props) => {
+	const initialDateInput = useYearInput('')
+	const endDateInput = useYearInput('')
 	const [loading, setLoading] = React.useState(true)
-	const [totalBooks, setTotalBooks] = React.useState(20)
+	const [totalBooks, setTotalBooks] = React.useState(0)
 	const [page, setPage] = React.useState(0)
 	const [bookPage, setBookPage] = React.useState<Book[]>([])
 
 	React.useEffect(() => {
-		getBookPage(page)
-	}, [])
+		getBookPage()
+	}, [page, props.searchTerm])
 
-	const getBookPage = async (newPage: number) => {
+	const getBookPage = async () => {
 		setLoading(true)
 		try {
-			await sleep(2000) // Simulating a API request
-			setBookPage(bookPages[newPage])
+			const response = await axiosInstance.get(
+				`http://localhost:3000/books?page=${page}&searchTerm=${props.searchTerm}&initialDate=${initialDateInput.value}&endDate=${endDateInput.value}`
+			)
+			setBookPage(response.data.books)
+			setTotalBooks(response.data.totalBooks)
 		} catch (e) {
 			console.error(e)
 		}
@@ -37,7 +42,6 @@ const BookTable: React.FC<Props> = (props) => {
 
 	const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, newPage: number) => {
 		setPage(newPage)
-		getBookPage(newPage)
 	}
 
 	const renderBooks = () =>
@@ -88,7 +92,7 @@ const BookTable: React.FC<Props> = (props) => {
 			<TablePagination
 				rowsPerPageOptions={ [10] }
 				rowsPerPage={ 10 }
-				count={ totalBooks }
+				count={ Number(totalBooks) }
 				page={ page }
 				onChangePage={ handleChangePage }
 				labelDisplayedRows={ formatPagination }
@@ -100,7 +104,7 @@ const BookTable: React.FC<Props> = (props) => {
 	)
 }
 
-const mapStateToProps = (state: RootReducerInterface) => ({})
+const mapStateToProps = (state: RootReducerInterface) => ({ searchTerm: state.bookReducer.searchTerm })
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openBookDialog }, dispatch)
 export default connect<StateProps, DispatchProps, OwnProps>(
 	mapStateToProps,
@@ -123,7 +127,9 @@ interface OwnState {}
 
 interface OwnProps {}
 
-interface StateProps {}
+interface StateProps {
+	searchTerm: string
+}
 
 interface DispatchProps {
 	openBookDialog: OpenBookDialogAction

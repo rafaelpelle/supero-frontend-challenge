@@ -11,56 +11,56 @@ import Typography from '@material-ui/core/Typography'
 const BookDialog: React.FC<Props> = (props) => {
 	const { selectedBook, closeBookDialog } = props
 
-	return (
+	return !!selectedBook ? (
 		<Dialog maxWidth='sm' open={ !!selectedBook } onClose={ closeBookDialog }>
-			{ selectedBook && (
-				<React.Fragment>
-					<DialogTitle style={ { textAlign: 'center' } }>Detalhes do Livro</DialogTitle>
-					<DialogContent>
-						<Typography paragraph variant='body1'>
-							<strong>Título: </strong>
-							{ selectedBook.title }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>Autor: </strong>
-							{ selectedBook.author }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>Editora: </strong>
-							{ selectedBook.publisher }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>Ano: </strong>
-							{ selectedBook.year }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>ISBN: </strong>
-							{ selectedBook.ISBN }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>Idioma: </strong>
-							{ selectedBook.language }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>Peso: </strong>
-							{ selectedBook.weight + 'g' }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>Comprimento: </strong>
-							{ selectedBook.size.length + 'cm' }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>Largura: </strong>
-							{ selectedBook.size.width + 'cm' }
-						</Typography>
-						<Typography paragraph variant='body1'>
-							<strong>Altura: </strong>
-							{ selectedBook.size.height + 'cm' }
-						</Typography>
-					</DialogContent>
-				</React.Fragment>
-			) }
+			<React.Fragment>
+				<DialogTitle style={ { textAlign: 'center' } }>Detalhes do Livro</DialogTitle>
+				<DialogContent>
+					<Typography paragraph variant='body1'>
+						<strong>Título: </strong>
+						{ selectedBook.title }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>Autor: </strong>
+						{ selectedBook.author }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>Editora: </strong>
+						{ selectedBook.publisher }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>Ano: </strong>
+						{ selectedBook.year }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>ISBN: </strong>
+						{ selectedBook.isbn }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>Idioma: </strong>
+						{ selectedBook.language }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>Peso: </strong>
+						{ selectedBook.weight + 'g' }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>Comprimento: </strong>
+						{ selectedBook.length + 'cm' }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>Largura: </strong>
+						{ selectedBook.width + 'cm' }
+					</Typography>
+					<Typography paragraph variant='body1'>
+						<strong>Altura: </strong>
+						{ selectedBook.height + 'cm' }
+					</Typography>
+				</DialogContent>
+			</React.Fragment>
 		</Dialog>
+	) : (
+		<div />
 	)
 }
 
