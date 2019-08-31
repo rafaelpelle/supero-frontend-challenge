@@ -1,4 +1,8 @@
 import * as React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { RootReducerInterface, SearchByTermAction } from '../../utils/interfaces'
+import { searchByTerm } from '../../redux/ActionCreators/bookActions'
 import { isMobile } from '../../utils/theme'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/SearchRounded'
@@ -6,8 +10,8 @@ import InputBase from '@material-ui/core/InputBase'
 
 const SearchInput: React.FC<Props> = (props) => {
 	const [searchTerm, setSearchTerm] = React.useState('')
-	const { isOpen, setIsOpen } = props
-	const placeholder = 'Busque por livros...'
+	const { isOpen, setIsOpen, searchByTerm } = props
+	const placeholder = 'Busque por título, autor ou ISBN...'
 	const inputRef = React.useRef(null)
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +30,7 @@ const SearchInput: React.FC<Props> = (props) => {
 			}
 		} else {
 			if (searchTerm) {
-				// TODO Search something
+				searchByTerm(searchTerm)
 			}
 			setIsOpen(false)
 			setSearchTerm('')
@@ -51,7 +55,12 @@ const SearchInput: React.FC<Props> = (props) => {
 	)
 }
 
-export default SearchInput
+const mapStateToProps = (state: RootReducerInterface) => ({})
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ searchByTerm }, dispatch)
+export default connect<StateProps, DispatchProps, OwnProps>(
+	mapStateToProps,
+	mapDispatchToProps
+)(SearchInput)
 /////////////////////////////////////////////////////////////////
 ///////////////////////////// STYLES ////////////////////////////
 /////////////////////////////////////////////////////////////////
@@ -66,6 +75,7 @@ const visibleInputStyle = {
 	transition: 'all .3s ease-in-out 0s, background-color .2s linear .1s',
 	overflow: 'hidden',
 	padding: '7px 10px',
+	borderRadius: '4px',
 }
 const hiddenInputStyle = {
 	...visibleInputStyle,
@@ -84,7 +94,9 @@ interface OwnProps {
 
 interface StateProps {}
 
-interface DispatchProps {}
+interface DispatchProps {
+	searchByTerm: SearchByTermAction
+}
 
 type Props = StateProps & DispatchProps & OwnProps
 type State = OwnState

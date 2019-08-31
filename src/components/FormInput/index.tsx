@@ -27,13 +27,7 @@ const FormInput: React.FC<Props> = (props) => {
 		ref,
 	} = props
 	return (
-		<FormControl
-			variant={ variant }
-			style={ style }
-			fullWidth={ fullWidth }
-			error={ !!error }
-			disabled={ disabled }
-		>
+		<FormControl variant={ variant } style={ style } fullWidth={ fullWidth } error={ !!error } disabled={ disabled }>
 			<InputLabel>{ label }</InputLabel>
 			<Input
 				name={ name }

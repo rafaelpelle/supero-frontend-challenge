@@ -1,10 +1,12 @@
 import * as React from 'react'
+import { useSnackbar } from 'notistack'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { axiosInstance } from '../../utils/httpClient'
 import { Book, RootReducerInterface, OpenBookDialogAction } from '../../utils/interfaces'
 import { openBookDialog } from '../../redux/ActionCreators/bookActions'
 import { useYearInput } from '../../hooks/UseInput'
+import TableHeader from './TableHeader'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -17,6 +19,7 @@ import TablePagination from '@material-ui/core/TablePagination'
 const BookTable: React.FC<Props> = (props) => {
 	const initialDateInput = useYearInput('')
 	const endDateInput = useYearInput('')
+	const { enqueueSnackbar } = useSnackbar()
 	const [loading, setLoading] = React.useState(true)
 	const [totalBooks, setTotalBooks] = React.useState(0)
 	const [page, setPage] = React.useState(0)
@@ -30,7 +33,7 @@ const BookTable: React.FC<Props> = (props) => {
 		setLoading(true)
 		try {
 			const response = await axiosInstance.get(
-				`http://localhost:3000/books?page=${page}&searchTerm=${props.searchTerm}&initialDate=${initialDateInput.value}&endDate=${endDateInput.value}`
+				`/books?page=${page}&searchTerm=${props.searchTerm}&initialDate=${initialDateInput.value}&endDate=${endDateInput.value}`
 			)
 			setBookPage(response.data.books)
 			setTotalBooks(response.data.totalBooks)
@@ -42,6 +45,18 @@ const BookTable: React.FC<Props> = (props) => {
 
 	const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, newPage: number) => {
 		setPage(newPage)
+	}
+
+	const handleDateClick = async () => {
+		const numericInitial = Number(initialDateInput.value)
+		const numericEnd = Number(endDateInput.value)
+		if (numericInitial < 1500) {
+			enqueueSnackbar('O ano inicial deve ser maior que 1500!', { variant: 'error' })
+		} else if (numericEnd > new Date().getFullYear()) {
+			enqueueSnackbar('O ano final não pode ser maior que o ano atual!', { variant: 'error' })
+		} else {
+			await getBookPage()
+		}
 	}
 
 	const renderBooks = () =>
@@ -77,30 +92,37 @@ const BookTable: React.FC<Props> = (props) => {
 	const formatPagination = ({ from, to, count }: any) => `${from}-${to} de ${count}`
 
 	return (
-		<Paper elevation={ 2 } style={ containerStyle }>
-			<Table style={ tableStyle }>
-				<TableHead>
-					<TableRow>
-						<TableCell>Livro</TableCell>
-						<TableCell align='right'>Autor</TableCell>
-						<TableCell align='right'>Editora</TableCell>
-						<TableCell align='right'>Ano</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>{ loading ? renderPlaceholders() : renderBooks() }</TableBody>
-			</Table>
-			<TablePagination
-				rowsPerPageOptions={ [10] }
-				rowsPerPage={ 10 }
-				count={ Number(totalBooks) }
-				page={ page }
-				onChangePage={ handleChangePage }
-				labelDisplayedRows={ formatPagination }
-				component='div'
-				backIconButtonProps={ { 'aria-label': 'previous page' } }
-				nextIconButtonProps={ { 'aria-label': 'next page' } }
+		<React.Fragment>
+			<TableHeader
+				initialDateInput={ initialDateInput }
+				endDateInput={ endDateInput }
+				handleClick={ handleDateClick }
 			/>
-		</Paper>
+			<Paper elevation={ 2 } style={ containerStyle }>
+				<Table style={ tableStyle }>
+					<TableHead>
+						<TableRow>
+							<TableCell>Livro</TableCell>
+							<TableCell align='right'>Autor</TableCell>
+							<TableCell align='right'>Editora</TableCell>
+							<TableCell align='right'>Ano</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>{ loading ? renderPlaceholders() : renderBooks() }</TableBody>
+				</Table>
+				<TablePagination
+					rowsPerPageOptions={ [10] }
+					rowsPerPage={ 10 }
+					count={ Number(totalBooks) }
+					page={ page }
+					onChangePage={ handleChangePage }
+					labelDisplayedRows={ formatPagination }
+					component='div'
+					backIconButtonProps={ { 'aria-label': 'previous page' } }
+					nextIconButtonProps={ { 'aria-label': 'next page' } }
+				/>
+			</Paper>
+		</React.Fragment>
 	)
 }
 
