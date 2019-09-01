@@ -7,6 +7,7 @@ import { Book, RootReducerInterface, OpenBookDialogAction } from '../../utils/in
 import { openBookDialog } from '../../redux/ActionCreators/bookActions'
 import { useYearInput } from '../../hooks/UseInput'
 import TableHeader from './TableHeader'
+import BookTableRow from '../../components/BookTable/BookTableRow'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -65,17 +66,7 @@ const BookTable: React.FC<Props> = (props) => {
 
 	const renderBooks = () =>
 		bookPage.map((book: Book, index: number) => (
-			<TableRow
-				onClick={ () => props.openBookDialog(book) }
-				style={ { cursor: 'pointer' } }
-				key={ index + book.title }
-				hover={ true }
-			>
-				<TableCell>{ book.title }</TableCell>
-				<TableCell align='right'>{ book.author }</TableCell>
-				<TableCell align='right'>{ book.publisher }</TableCell>
-				<TableCell align='right'>{ book.year }</TableCell>
-			</TableRow>
+			<BookTableRow book={ book } openBookDialog={ props.openBookDialog } key={ index } />
 		))
 
 	const renderPlaceholders = () => {

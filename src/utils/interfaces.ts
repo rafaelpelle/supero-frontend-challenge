@@ -21,7 +21,7 @@ export type CloseBookDialogAction = () => { type: string }
 /////////////////////////////////////////////////////////////////
 export interface Book {
 	title: string
-	ISBN: string
+	isbn: string
 	author: string
 	publisher: string
 	year: string
