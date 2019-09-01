@@ -29,6 +29,10 @@ const BookTable: React.FC<Props> = (props) => {
 		getBookPage()
 	}, [page, props.searchTerm])
 
+	React.useEffect(() => {
+		setPage(0)
+	}, [props.searchTerm])
+
 	const getBookPage = async () => {
 		setLoading(true)
 		try {
