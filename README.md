@@ -1,6 +1,6 @@
 # supero-frontend-challenge
 
-**Live at: https://supero-frontend-challenge.netlify.com**
+**Live at: https://supero.rafaelpelle.tech**
 
 ## Requirements
 
