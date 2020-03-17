@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = process.env.URL || 'https://api.supero.rafaelpelle.tech'
+const URL = process.env.URL || 'https://supero-book-api.herokuapp.com/'
 
 export const axiosInstance = axios.create({
 	baseURL: URL,
